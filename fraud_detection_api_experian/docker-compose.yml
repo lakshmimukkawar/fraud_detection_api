@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  dev:
+      image: prediction_services
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+        target: dev
+      working_dir: /src
+      volumes:
+        - type: bind
+          source: ./
+          target: /src
+
+  fraud_detection_api:
+      image: fraud_detection_api
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+        target: fraud_detection_api
+      working_dir: /src
+      volumes:
+        - type: bind
+          source: ./
+          target: /src
+      ports:
+        - "8000:8000"
+
+  jupyter:
+    extends: dev
+    command: jupyter lab --ip=0.0.0.0 --port=9000 --no-browser --allow-root
+    ports:
+      - 9000:9000
+
+  tests:
+      extends: dev
+      command: pytest tests/routes
+
+  lint:
+      extends: dev
+      command: 
+        - /bin/bash
+        - -c
+        - poetry run black ./tests/ ./src/ | poetry run isort --profile=black --lines-after-imports=2 ./tests/ ./src/

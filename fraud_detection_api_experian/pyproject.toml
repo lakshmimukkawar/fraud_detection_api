@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fraud_detection_api"
+version = "0.0.1"
+description = "Example repo for fraud detection"
+authors = ["Lakshmi Mukkawar <lakshmi.mukkawar@gmail.com>"]
+readme = "README.md"
+homepage = "https://example.com"
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+pandas = "1.5.0"
+fastapi = "0.75.1"
+uvicorn = "0.17.6"
+matplotlib = "3.7.1"
+xgboost = "2.0.3"
+scikit-learn = "1.3.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+jupyterlab= "4.2.2"
+isort = "*"
+black = "*"
